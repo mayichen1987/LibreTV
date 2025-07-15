@@ -118,7 +118,7 @@ const API_SITES = {
         api: 'https://cj.lziapi.com/api.php/provide/vod/',
         name: '影视工厂',
     },
-    testSource: {
+    qiqidys: {
         api: 'https://www.qiqidys.com/api.php/provide/vod',
         name: '七七资源',
     },
