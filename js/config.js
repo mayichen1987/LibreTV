@@ -119,57 +119,8 @@ const API_SITES = {
         name: '空内容测试源',
         adult: true
     },
-    // 下面是一些成人内容的API源，默认隐藏，使用本项目浏览黄色内容违背项目初衷
-    // 互联网上传播的色情内容将人彻底客体化、工具化，是性别解放和人类平等道路上的巨大障碍。
-    // 这些黄色影片是资本主义父权制压迫的最恶毒体现，它将暴力和屈辱商品化，践踏人的尊严，对受害者造成无法弥愈的伤害，并毒害社会关系。
-    // 资本为了利润，不惜将最卑劣的剥削（包括对受害者和表演者的剥削）和暴力商品化，
-    // 把性别剥削塑造成“性享受”麻痹观众的意识，转移我们对现实生活中矛盾和压迫的注意力。
-    // 这些影片和背后的产业已经使数百万男女“下海”，出卖自己的身体，甚至以此为生计。
-    // 而作为观众无辜吗？毫无疑问，他们促成了黄色产业链的再生产。
-    // 我们提供此警告，是希望您能认清这些内容的本质——它们是压迫和奴役的工具，而非娱乐。
-     ckzy: {
-         api: 'https:www.ckzy1.com',
-         name: 'CK资源',
-         adult: true
-     },
-     jkun: {
-         api: 'https:jkunzyapi.com',
-         name: 'jkun资源',
-         adult: true
-     },
-     bwzy: {
-         api: 'https:api.bwzym3u8.com',
-         name: '百万资源',
-         adult: true
-     },
-     souav: {
-         api: 'https:api.souavzy.vip',
-         name: 'souav资源',
-         adult: true
-     },
-     r155: {
-         api: 'https:155api.com',
-         name: '155资源',
-         adult: true
-     },
-     lsb: {
-         api: 'https:apilsbzy1.com',
-         name: 'lsb资源',
-         adult: true
-     },
-     huangcang: {
-         api: 'https:hsckzy.vip',
-         name: '黄色仓库',
-         adult: true,
-         detail: 'https:hsckzy.vip'
-     },
-     yutu: {
-         api: 'https:yutuzy10.com',
-         name: '玉兔资源',
-         adult: true
-     },
-
-     // 下面是资源失效率高的API源，不建议使用
+    
+    // 下面是资源失效率高的API源，不建议使用
      subo: {
          api: 'https:subocaiji.com/api.php/provide/vod',
          name: '速播资源'
@@ -182,6 +133,175 @@ const API_SITES = {
          api: 'https:api.ukuapi88.com/api.php/provide/vod',
          name: 'U酷资源'
      },
+    
+    // 下面是一些成人内容的API源，默认隐藏，使用本项目浏览黄色内容违背项目初衷
+    // 互联网上传播的色情内容将人彻底客体化、工具化，是性别解放和人类平等道路上的巨大障碍。
+    // 这些黄色影片是资本主义父权制压迫的最恶毒体现，它将暴力和屈辱商品化，践踏人的尊严，对受害者造成无法弥愈的伤害，并毒害社会关系。
+    // 资本为了利润，不惜将最卑劣的剥削（包括对受害者和表演者的剥削）和暴力商品化，
+    // 把性别剥削塑造成“性享受”麻痹观众的意识，转移我们对现实生活中矛盾和压迫的注意力。
+    // 这些影片和背后的产业已经使数百万男女“下海”，出卖自己的身体，甚至以此为生计。
+    // 而作为观众无辜吗？毫无疑问，他们促成了黄色产业链的再生产。
+    // 我们提供此警告，是希望您能认清这些内容的本质——它们是压迫和奴役的工具，而非娱乐。
+    heiliao: {
+        api: 'https://www.heiliaozyapi.com/api.php/provide/vod',
+        name: '黑料资源',
+        adult: true
+    },
+    hsck: {
+        api: 'https://hsckzy.xyz/api.php/provide/vod',
+        name: '黄色仓库',
+        adult: true
+    },
+    lajiao: {
+        api: 'https://apilj.com/api.php/provide/vod',
+        name: '辣椒资源',
+        adult: true
+    },
+    souav: {
+        api: 'https://api.souavzy.vip/api.php/provide/vod',
+        name: 'souav资源',
+        adult: true
+    },
+    senlin: {
+        api: 'https://slapibf.com/api.php/provide/vod',
+        name: '森林资源',
+        adult: true
+    },
+    senlin_bak: {
+        api: 'https://beiyong.slapibf.com/api.php/provide/vod',
+        name: '森林资源备用',
+        adult: true
+    },
+    r155: {
+        api: 'https://155api.com/api.php/provide/vod',
+        name: '155资源',
+        adult: true
+    },
+    ckzy: {
+        api: 'https://ckzy.me/api.php/provide/vod',
+        name: 'CK资源',
+        adult: true
+    },
+    jkun: {
+        api: 'https://jkunzyapi.com/api.php/provide/vod',
+        name: 'jkun资源',
+        adult: true
+    },
+    lebo: {
+        api: 'https://lbapi9.com/api.php/provide/vod',
+        name: '乐播资源',
+        adult: true
+    },
+    danaizi: {
+        api: 'https://apidanaizi.com/api.php/provide/vod',
+        name: '大奶子',
+        adult: true
+    },
+    xiaoji: {
+        api: 'https://api.xiaojizy.live/provide/vod',
+        name: '小鸡资源',
+        adult: true
+    },
+    xingba1: {
+        api: 'https://xingba111.com/api.php/provide/vod',
+        name: '杏吧资源1',
+        adult: true
+    },
+    xingba2: {
+        api: 'https://xingba222.com/api.php/provide/vod',
+        name: '杏吧资源2',
+        adult: true
+    },
+    taohua: {
+        api: 'https://thzy1.me/api.php/provide/vod',
+        name: '桃花资源',
+        adult: true
+    },
+    didi: {
+        api: 'https://api.ddapi.cc/api.php/provide/vod',
+        name: '滴滴资源',
+        adult: true
+    },
+    fanhao: {
+        api: 'http://fhapi9.com/api.php/provide/vod',
+        name: '番号资源',
+        adult: true
+    },
+    baipiao: {
+        api: 'https://www.kxgav.com/api/json.php',
+        name: '白嫖资源',
+        adult: true
+    },
+    jingpin: {
+        api: 'https://www.jingpinx.com/api.php/provide/vod',
+        name: '精品资源',
+        adult: true
+    },
+    meishaonv: {
+        api: 'https://www.msnii.com/api/json.php',
+        name: '美少女',
+        adult: true
+    },
+    doudou: {
+        api: 'https://api.douapi.cc/api.php/provide/vod',
+        name: '豆豆资源',
+        adult: true
+    },
+    haohua: {
+        api: 'https://hhzyapi.com/api.php/provide/vod/from/hhm3u8/at/json',
+        name: '豪华资源',
+        adult: true
+    },
+    jinying3: {
+        api: 'https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json',
+        name: '金鹰资源3',
+        adult: true
+    },
+    yinshuiji: {
+        api: 'https://www.xrbsp.com/api/json.php',
+        name: '饮水机资源',
+        adult: true
+    },
+    xiangnaier: {
+        api: 'https://www.gdlsp.com/api/json.php',
+        name: '香奶儿资源',
+        adult: true
+    },
+    madou: {
+        api: 'https://91md.me/api.php/provide/vod',
+        name: '麻豆视频',
+        adult: true
+    },
+    huangav: {
+        api: 'https://www.pgxdy.com/api/json.php',
+        name: '黄AVZY',
+        adult: true
+    },
+    naixiang: {
+        api: 'https://naixxzy.com/api.php/provide/vod',
+        name: '奶香资源',
+        adult: true
+    },
+    yutu: {
+        api: 'https://apiyutu.com/api.php/provide/vod',
+        name: '玉兔资源',
+        adult: true
+    },
+    laosebi: {
+        api: 'https://apilsbzy1.com/api.php/provide/vod',
+        name: '老色逼',
+        adult: true
+    },
+    shayu: {
+        api: 'https://shayuapi.com/api.php/provide/vod',
+        name: '鲨鱼资源',
+        adult: true
+    },
+    bwzy: {
+        api: 'https://api.bwzym3u8.com/api.php/provide/vod',
+        name: '百万资源',
+        adult: true
+    },
 };
 
 // 定义合并方法
