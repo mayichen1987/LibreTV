@@ -174,13 +174,19 @@ export async function onRequest(context) {
 
     // 获取远程内容及其类型
     async function fetchContentWithType(targetUrl) {
+        const target = new URL(targetUrl);
+        const isDoubanHost = target.hostname === 'douban.com' ||
+            target.hostname.endsWith('.douban.com') ||
+            target.hostname === 'doubanio.com' ||
+            target.hostname.endsWith('.doubanio.com');
         const headers = new Headers({
             'User-Agent': getRandomUserAgent(),
             'Accept': '*/*',
             // 尝试传递一些原始请求的头信息
             'Accept-Language': request.headers.get('Accept-Language') || 'zh-CN,zh;q=0.9,en;q=0.8',
-            // 尝试设置 Referer 为目标网站的域名，或者传递原始 Referer
-            'Referer': request.headers.get('Referer') || new URL(targetUrl).origin
+            // 豆瓣请求使用豆瓣 Referer，避免把本站域名传给图片服务器
+            'Referer': isDoubanHost ? 'https://movie.douban.com/' :
+                (request.headers.get('Referer') || target.origin)
         });
 
         try {
@@ -195,11 +201,12 @@ export async function onRequest(context) {
                  throw new Error(`HTTP error ${response.status}: ${response.statusText}. URL: ${targetUrl}. Body: ${errorBody.substring(0, 150)}`);
             }
 
-            // 读取响应内容为文本
-            const content = await response.text();
-            const contentType = response.headers.get('Content-Type') || '';
-            logDebug(`请求成功: ${targetUrl}, Content-Type: ${contentType}, 内容长度: ${content.length}`);
-            return { content, contentType, responseHeaders: response.headers }; // 同时返回原始响应头
+            const contentType = (response.headers.get('Content-Type') || '').toLowerCase();
+            // 图片等媒体必须按原始字节转发；M3U8 仍按文本读取，以便重写链接
+            const binaryContent = isMediaFile(targetUrl, contentType) && !isM3u8Content('', contentType);
+            const content = binaryContent ? response.body : await response.text();
+            logDebug(`请求成功: ${targetUrl}, Content-Type: ${contentType}, ${binaryContent ? '二进制流' : `内容长度: ${content.length}`}`);
+            return { content, contentType, responseHeaders: response.headers, binaryContent };
 
         } catch (error) {
              logDebug(`请求彻底失败: ${targetUrl}: ${error.message}`);
@@ -218,7 +225,7 @@ export async function onRequest(context) {
         return content && typeof content === 'string' && content.trim().startsWith('#EXTM3U');
     }
 
-    // 判断是否是媒体文件 (根据扩展名和 Content-Type) - 这部分在此代理中似乎未使用，但保留
+    // 判断是否是媒体文件 (根据扩展名和 Content-Type)
     function isMediaFile(url, contentType) {
         if (contentType) {
             for (const mediaType of MEDIA_CONTENT_TYPES) {
@@ -426,7 +433,8 @@ export async function onRequest(context) {
         logDebug(`收到代理请求: ${targetUrl}`);
 
         // --- 缓存检查 (KV) ---
-        const cacheKey = `proxy_raw:${targetUrl}`; // 使用原始内容的缓存键
+        // 更新缓存版本，避免读取旧版按 UTF-8 文本存储的损坏图片
+        const cacheKey = `proxy_raw:v2:${targetUrl}`;
         let kvNamespace = null;
         try {
             kvNamespace = env.LIBRETV_PROXY_KV;
@@ -436,7 +444,7 @@ export async function onRequest(context) {
             kvNamespace = null;
         }
 
-        if (kvNamespace) {
+        if (kvNamespace && !isMediaFile(targetUrl, '')) {
             try {
                 const cachedDataJson = await kvNamespace.get(cacheKey); // 直接获取字符串
                 if (cachedDataJson) {
@@ -465,7 +473,14 @@ export async function onRequest(context) {
         }
 
         // --- 实际请求 ---
-        const { content, contentType, responseHeaders } = await fetchContentWithType(targetUrl);
+        const { content, contentType, responseHeaders, binaryContent } = await fetchContentWithType(targetUrl);
+
+        // 二进制流直接返回，不进入只适用于文本的 JSON/KV 缓存
+        if (binaryContent) {
+            const finalHeaders = new Headers(responseHeaders);
+            finalHeaders.set('Cache-Control', `public, max-age=${CACHE_TTL}`);
+            return createResponse(content, 200, finalHeaders);
+        }
 
         // --- 写入缓存 (KV) ---
         if (kvNamespace) {
